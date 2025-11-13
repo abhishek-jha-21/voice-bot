@@ -1,0 +1,2 @@
+2025-11-13 18:20:23,171 [ERROR] Failed to initiate call to heyy: HTTP 400 error: Unable to create record: The source phone number provided, 4399, is not yet verified for your account. You may only make calls from phone numbers that you've verified or purchased from Twilio.
+2025-11-13 18:21:52,751 [ERROR] Failed to initiate call to heyy: HTTP 400 error: Unable to create record: The source phone number provided, 4399, is not yet verified for your account. You may only make calls from phone numbers that you've verified or purchased from Twilio.
