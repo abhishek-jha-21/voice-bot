@@ -19,20 +19,15 @@ logging.basicConfig(
 async def voice():
     twiml = f"""
     <Response>
-        <Say voice="Polly.Aditi-Neural" language="hi-IN" rate="medium" pitch="medium">
-            नमस्ते! मैं आपका NEET भविष्यवक्ता सहायक हूँ। 
-        </Say>
-        <Pause length="1"/>
-        <Say voice="Polly.Aditi-Neural" language="hi-IN">
-            कृपया मुझे अपना NEET स्कोर बताइए ताकि मैं आपका अनुमानित रैंक बता सकूँ।
-        </Say>
+        <!-- Play the pre-recorded human-like greeting -->
+        <Play>{BASE_URL}/assets/greet.mp3</Play>
         <Pause length="1"/>
         <Gather input="speech" action="{BASE_URL}/handle-response" method="POST" timeout="7">
-            <Say voice="Polly.Aditi-Neural" language="hi-IN">
-                अब अपना स्कोर बोलें। उदाहरण के लिए: एक सौ पचास।
+            <Say language="hi-IN">
+                कृपया अपना NEET स्कोर बोलें। उदाहरण के लिए: एक सौ पचास।
             </Say>
         </Gather>
-        <Say voice="Polly.Aditi-Neural" language="hi-IN">
+        <Say language="hi-IN">
             हमें आपकी प्रतिक्रिया नहीं मिली। धन्यवाद!
         </Say>
     </Response>
