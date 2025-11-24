@@ -4,10 +4,11 @@ from app.services.neet_service import predict_neet_rank
 from app.config import BASE_URL
 import logging
 import os
+from app.services.voice_logger import log_voice_reply
+
 
 router = APIRouter()
 
-# --- Setup logging ---
 log_file = os.path.join(os.path.dirname(__file__), "voice_errors.log")
 logging.basicConfig(
     filename=log_file,
@@ -15,14 +16,22 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
-@router.post("/voice")
+@router.post("/voice1")
 async def voice():
     twiml = f"""
     <Response>
         <!-- Play the pre-recorded human-like greeting -->
         <Play>{BASE_URL}/assets/greet.mp3</Play>
         <Pause length="1"/>
-        <Gather input="speech" action="{BASE_URL}/handle-response" method="POST" timeout="7">
+        <Gather 
+            input="speech" 
+            language="hi-IN"
+            action="{BASE_URL}/handle-response" 
+            method="POST" 
+            timeout="10" 
+            actionOnEmptyResult="true"
+        >
+
             <Say language="hi-IN">
                 कृपया अपना NEET स्कोर बोलें। उदाहरण के लिए: एक सौ पचास।
             </Say>
@@ -35,7 +44,6 @@ async def voice():
     return Response(content=twiml, media_type="application/xml")
 
 
-
 @router.post("/handle-response")
 async def handle_response(request: Request):
     try:
@@ -43,18 +51,12 @@ async def handle_response(request: Request):
         speech = form.get("SpeechResult", "")
 
         if speech:
-            try:
-                # Convert spoken number words to digits if needed
-                marks = int(''.join(filter(str.isdigit, speech)))
-                rank = predict_neet_rank(marks)
-                reply = f"आपके {marks} स्कोर के आधार पर आपका अनुमानित रैंक {rank} है। शुभकामनाएँ!"
-            except ValueError:
-                reply = "माफ़ कीजिये, मैं आपका स्कोर समझ नहीं पाया। कृपया फिर से प्रयास करें।"
+            reply = speech
+            log_voice_reply(speech)
         else:
-            reply = "हमें कोई प्रतिक्रिया नहीं मिली। कृपया पुनः कॉल करें।"
+            reply = "हमें कोई प्रतिक्रिया नहीं मिली। कृपया पुनः प्रयास करें।"
 
     except Exception as e:
-        # Log error to file
         logging.error("Error in handle-response: %s", str(e))
         reply = "क्षमा करें, कुछ त्रुटि हुई है। बाद में पुनः प्रयास करें।"
 
@@ -68,6 +70,19 @@ async def handle_response(request: Request):
             NEET भविष्यवक्ता सहायक का उपयोग करने के लिए धन्यवाद। अलविदा!
         </Say>
         <Hangup/>
+    </Response>
+    """
+    return Response(content=twiml, media_type="application/xml")
+
+
+@router.post("/voice")
+async def voice():
+    twiml = f"""
+    <Response>
+        <Start>
+            <Stream url="wss://voice-bot.v4edu.in/twilio-stream"/>
+        </Start>
+        <Say language="hi-IN">कृपया अपना NEET स्कोर बोलें।</Say>
     </Response>
     """
     return Response(content=twiml, media_type="application/xml")

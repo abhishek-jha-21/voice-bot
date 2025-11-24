@@ -5,3 +5,10 @@ python-dotenv
 python-multipart
 requests
 gunicorn
+sqlalchemy
+
+vosk
+websockets
+aiohttp
+numpy
+scipy

@@ -1,2 +1,83 @@
 2025-11-13 18:20:23,171 [ERROR] Failed to initiate call to heyy: HTTP 400 error: Unable to create record: The source phone number provided, 4399, is not yet verified for your account. You may only make calls from phone numbers that you've verified or purchased from Twilio.
 2025-11-13 18:21:52,751 [ERROR] Failed to initiate call to heyy: HTTP 400 error: Unable to create record: The source phone number provided, 4399, is not yet verified for your account. You may only make calls from phone numbers that you've verified or purchased from Twilio.
+2025-11-18 09:13:07,156 [ERROR] Failed to initiate call to string: HTTP 400 error: Unable to create record: The source phone number provided, 787464, is not yet verified for your account. You may only make calls from phone numbers that you've verified or purchased from Twilio.
+2025-11-24 07:13:27,950 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:28,107 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:28,127 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:28,160 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:51,799 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:51,843 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:52,028 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
+2025-11-24 07:13:52,201 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<start_ws() done, defined at /var/www/voice-bot.v4edu.in/websocket/ws_server.py:45> exception=TypeError("BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'")>
+Traceback (most recent call last):
+  File "/var/www/voice-bot.v4edu.in/websocket/ws_server.py", line 48, in start_ws
+    return await websockets.serve(
+                 ^^^^^^^^^^^^^^^^^
+  File "/var/www/voice-bot.v4edu.in/venv/lib/python3.12/site-packages/websockets/asyncio/server.py", line 808, in __init__
+    self.create_server = loop.create_server(factory, host, port, **kwargs)  # type: ignore[arg-type]
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: BaseEventLoop.create_server() got an unexpected keyword argument 'read_limit'
