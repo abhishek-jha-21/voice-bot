@@ -7,7 +7,6 @@ from openai import OpenAI
 from app.services.voice_logger import log_voice_reply
 
 # ==================== CONFIG ====================
-OPENAI_API_KEY = "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"
 REALTIME_MODEL = "gpt-4o-realtime-preview-2024-10-01"
 
 client = OpenAI(api_key=OPENAI_API_KEY)
