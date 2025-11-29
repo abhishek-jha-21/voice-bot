@@ -82,7 +82,7 @@ async def voice():
         <Start>
             <Stream url="wss://voice-bot.v4edu.in/twilio-stream"/>
         </Start>
-        <Say language="hi-IN">कृपया अपना NEET स्कोर बोलें।</Say>
+        <Say language="hi-IN">आप कैसे हैं??</Say>
     </Response>
     """
     return Response(content=twiml, media_type="application/xml")
