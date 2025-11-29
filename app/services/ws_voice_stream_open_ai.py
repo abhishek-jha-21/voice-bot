@@ -5,14 +5,16 @@ import websockets
 import audioop
 from openai import OpenAI
 from app.services.voice_logger import log_voice_reply
+import os
 
 # ==================== CONFIG ====================
 REALTIME_MODEL = "gpt-4o-realtime-preview-2024-10-01"
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def decode_base64(payload: str) -> bytes:
+    """Decode base64 audio with padding fix"""
     missing = len(payload) % 4
     if missing:
         payload += "=" * (4 - missing)
@@ -20,7 +22,6 @@ def decode_base64(payload: str) -> bytes:
 
 
 async def handle_ws_service(websocket: websockets.WebSocketServerProtocol):
-    print("Client connected (Twilio)")
     log_voice_reply("Client connected (Twilio)")
 
     ws_url = f"wss://api.openai.com/v1/realtime?model={REALTIME_MODEL}"
@@ -33,46 +34,42 @@ async def handle_ws_service(websocket: websockets.WebSocketServerProtocol):
     try:
         conn = await websockets.connect(
             ws_url,
-            additional_headers=headers,
+            extra_headers=headers,
             max_size=None,
             ping_interval=20,
             ping_timeout=60,
         )
 
-        # Session config
+        # Configure session
         await conn.send(json.dumps({
             "type": "session.update",
             "session": {
                 "modalities": ["text", "audio"],
-                "instructions": "You are a super fast, friendly phone assistant. Keep replies extremely short and natural.",
+                "instructions": "You are a fast, friendly phone assistant. Short natural replies.",
                 "voice": "alloy",
                 "input_audio_format": "pcm16",
                 "output_audio_format": "pcm16",
             }
         }))
-
-        print("Connected to OpenAI Realtime API")
         log_voice_reply("Connected to OpenAI Realtime API")
 
-        # Forward OpenAI → Twilio + log transcript
+        # Forward OpenAI → Twilio
         async def forward_openai():
             try:
                 async for message in conn:
                     event = json.loads(message)
                     typ = event.get("type")
 
-                    # ---- Audio from OpenAI ----
                     if typ == "response.audio.delta":
-                        audio_b64 = event.get("delta", "")
+                        audio_b64 = event.get("delta")
                         if audio_b64:
                             await websocket.send(json.dumps({
                                 "event": "media",
                                 "media": {"payload": audio_b64}
                             }))
 
-                    # ---- Text from OpenAI ----
                     elif typ == "response.output_text.delta":
-                        text = event.get("text", "")
+                        text = event.get("text")
                         if text:
                             await websocket.send(json.dumps({"event": "text", "text": text}))
                             log_voice_reply(f"AI: {text}")
@@ -85,7 +82,7 @@ async def handle_ws_service(websocket: websockets.WebSocketServerProtocol):
 
         asyncio.create_task(forward_openai())
 
-        # Handle Twilio → OpenAI
+        # Twilio → OpenAI
         async for message in websocket:
             try:
                 data = json.loads(message)
@@ -101,24 +98,19 @@ async def handle_ws_service(websocket: websockets.WebSocketServerProtocol):
                 payload_b64 = data["media"]["payload"]
                 mulaw_8khz = decode_base64(payload_b64)
 
-                # Convert μ-law → linear PCM16
-                try:
-                    linear = audioop.ulaw2lin(mulaw_8khz, 2)
-                    if isinstance(linear, tuple):
-                        linear = linear[0]
-                except Exception:
-                    linear = audioop.ulaw2lin(mulaw_8khz, 2)
+                # μ-law → PCM16
+                linear = audioop.ulaw2lin(mulaw_8khz, 2)
 
                 # Resample 8kHz → 24kHz
                 resampled = audioop.ratecv(linear, 2, 1, 8000, 24000, None)[0]
 
-                # --- Log user speech via OpenAI STT ---
+                # Optional: log transcript via Whisper
                 try:
                     transcript = client.audio.transcriptions.create(
                         model="whisper-1",
-                        file=resampled  # raw PCM16 bytes
+                        file=resampled
                     )
-                    if transcript and transcript.text:
+                    if transcript and getattr(transcript, "text", None):
                         log_voice_reply(f"User: {transcript.text}")
                 except Exception as e:
                     log_voice_reply(f"STT error: {e}")

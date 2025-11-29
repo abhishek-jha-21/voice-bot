@@ -16,7 +16,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
-@router.post("/voice")
+@router.post("/voice1")
 async def voice():
     twiml = """
     <Response>
@@ -27,3 +27,18 @@ async def voice():
     </Response>
     """
     return Response(content=twiml, media_type="application/xml")
+
+
+
+@router.post("/voice")
+async def voice():
+    twiml = """
+    <Response>
+        <Connect>
+            <Stream url="wss://voice-bot.v4edu.in/twilio-stream" />
+        </Connect>
+    </Response>
+    """
+    return Response(content=twiml, media_type="application/xml")
+
+

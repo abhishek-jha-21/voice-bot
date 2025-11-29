@@ -12,3 +12,4 @@ websockets
 aiohttp
 numpy
 scipy
+audioop-l10

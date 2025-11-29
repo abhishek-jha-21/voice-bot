@@ -11,8 +11,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise Exception("❌ OPENAI_API_KEY missing from environment")
 
-# URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
-URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview"
+URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
 
 
 async def handle_ws_service(websocket):
@@ -42,17 +41,17 @@ async def handle_ws_service(websocket):
                         "हमेशा सिर्फ हिंदी में जवाब दो, आवाज में। "
                         "जवाब छोटा, मीठा और मददगार हो।"
                     ),
-                    "voice": "coral",                   # Works if speech is enabled
+                    "voice": "alloy",                   # Works if speech is enabled
                     "input_audio_format": "g711_ulaw",
                     "output_audio_format": "g711_ulaw", # Twilio compatible
                     "turn_detection": {
                         "type": "server_vad",
                         "threshold": 0.5,
                         "prefix_padding_ms": 300,
-                        "silence_duration_ms": 400,
+                        "silence_duration_ms": 600,
                     },
                     "input_audio_transcription": {      # Whisper ASR
-                        "model": "gpt-4o-mini-transcribe",
+                        "model": "whisper-1",
                         "language": "hi",
                     },
                 }
@@ -73,14 +72,13 @@ async def handle_ws_service(websocket):
                         log("🎙 User started speaking")
 
                     elif event_type == "input_audio_buffer.speech_stopped":
-                        await oai.send_json({"type": "input_audio_buffer.commit"})   # 🔥 flush instantly
+                        log("🛑 User stopped — generating reply")
                         await oai.send_json({
                             "type": "response.create",
                             "response": {
                                 "modalities": ["audio", "text"],
-                                "stream": True,                     # ⚡ Start speaking before full answer generated
-                                "max_output_tokens": 150,
-                            }
+                                "max_output_tokens": 200,
+                            },
                         })
                         is_generating = True
 
