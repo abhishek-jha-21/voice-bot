@@ -74,15 +74,14 @@ async def handle_response(request: Request):
     """
     return Response(content=twiml, media_type="application/xml")
 
-
 @router.post("/voice")
 async def voice():
-    twiml = f"""
+    twiml = """
     <Response>
         <Start>
             <Stream url="wss://voice-bot.v4edu.in/twilio-stream"/>
         </Start>
-        <Say language="hi-IN">आप कैसे हैं??</Say>
+        <Say language="hi-IN">आप कैसे हैं?</Say>
     </Response>
     """
     return Response(content=twiml, media_type="application/xml")
